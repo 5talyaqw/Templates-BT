@@ -130,21 +130,33 @@ int BSNode::getHeight() const
 
 int BSNode::getDepth(const BSNode& root) const
 {
-	if (this == &root) // checking if node isroot
+	int leftDepth, rightDepth;
+
+	if (this == &root) // checking if node is root
 	{
 		return 0;
 	}
 	
 	//for left leaf
-	if (_left && _left->search(root.getData()))
+	if (_left)
 	{
-		return 1 + _left->getCurrNodeDistFromInputNode(&root);
+		leftDepth = _left->getDepth(root);
+		if (leftDepth != -1)
+		{
+			return 1 + leftDepth;
+		}
+		
 	}
 
 	//for right leaf
-	if (_right && _right->search(root.getData()))
+	if (_right)
 	{
-		return 1 + _right->getCurrNodeDistFromInputNode(&root);
+		rightDepth = _right->getDepth(root);
+		if (rightDepth != -1)
+		{
+			return 1 + rightDepth;
+		}
+
 	}
 
 	return -1; //node not found
